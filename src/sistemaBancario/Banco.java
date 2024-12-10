@@ -7,6 +7,8 @@ import java.util.Scanner;
 
 class Banco {
     public static List<Usuario> usuarios = new ArrayList<>();
+    public static List<ContaCorrentePrincipal> corrente = new ArrayList<>();
+    public static List<ContaPoupanca> poupanca = new ArrayList<>();
     public static List<Conta> contas = new ArrayList<>();
     private Scanner entrada = new Scanner(System.in);
     private static final String USUARIOS_FILE = "usuarios.txt";
@@ -136,6 +138,29 @@ class Banco {
             System.out.println("Erro ao salvar usuários: " + e.getMessage());
         }
     }
+
+    public void salvarCorrente() {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(CONPRI_FILE))) {
+            for (ContaCorrentePrincipal contaCorrentePrincipal : corrente) {
+                bw.write(contaCorrentePrincipal.getNumeroConta() + ";" + contaCorrentePrincipal.getSaldo()+ ";" + contaCorrentePrincipal.getLimiteChequeEspecial() + ";");
+                bw.newLine();
+            }
+        } catch (IOException e) {
+            System.out.println("Erro ao salvar usuários: " + e.getMessage());
+        }
+    }
+
+    public void salvarPoupanca() {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(CONPOP_FILE))) {
+            for (ContaPoupanca contaPoupanca : poupanca) {
+                bw.write(contaPoupanca.getNumeroConta() + ";" + contaPoupanca.getSaldo()+ ";");
+                bw.newLine();
+            }
+        } catch (IOException e) {
+            System.out.println("Erro ao salvar usuários: " + e.getMessage());
+        }
+    }
+
     // Criação do arquivo usuario
     private void verificarOuCriarArquivoUsuarios() {
         File arquivo = new File(USUARIOS_FILE);
