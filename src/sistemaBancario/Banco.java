@@ -19,7 +19,7 @@ class Banco {
         verificarOuCriarArquivoUsuarios();
         verificarOuCriarArquivoContas();
         carregarUsuarios();
-        //carregarContas();
+        carregarContas();
     }
 
     public void iniciarSistema() {
@@ -91,6 +91,40 @@ class Banco {
             }
         }
         return null;
+    }
+
+    private void carregarContas() {
+        try (BufferedReader br = new BufferedReader(new FileReader(CONTAS_FILE))) {
+            String linha;
+            while ((linha = br.readLine()) != null) {
+                String[] dados = linha.split(";");
+                if (dados.length == 7) {
+                    int tipo = Integer.parseInt(dados[6]);
+                    // nome, senha , cpf, endereço, telefone, tipo
+                    switch (tipo) {
+                        case 1:
+                            // gerente
+                            Gerente gerente = new Gerente(dados[0], dados[1], dados[2], dados[3], dados[4], dados[5]);
+                            usuarios.add(gerente);
+                            break;
+                        case 2:
+                            // bancario
+                            Bancario bancario = new Bancario(dados[0], dados[1], dados[2], dados[3], dados[4], dados[5]);
+                            usuarios.add(bancario);
+                            break;
+                        case 3:
+                            // cliente
+                            Cliente cliente = new Cliente(dados[0], dados[1], dados[2], dados[3], dados[4], dados[5]);
+                            usuarios.add(cliente);
+                            break;
+                        default:
+                            System.out.println("Tipo de usuário inválido no arquivo.");
+                    }
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Nenhum usuário encontrado para carregar.");
+        }
     }
 
     private void carregarUsuarios() {
