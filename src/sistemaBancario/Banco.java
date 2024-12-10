@@ -182,7 +182,7 @@ class Banco {
                 bw.newLine();
             }
         } catch (IOException e) {
-            System.out.println("Erro ao salvar usuários: " + e.getMessage());
+            System.out.println("Erro ao salvar Contas Poupanças7: " + e.getMessage());
         }
     }
 
@@ -196,7 +196,7 @@ class Banco {
                 bw.newLine();
             }
         } catch (IOException e) {
-            System.out.println("Erro ao salvar usuários: " + e.getMessage());
+            System.out.println("Erro ao salvar Contas Correntes: " + e.getMessage());
         }
     }
 
