@@ -3,6 +3,7 @@ package sistemaBancario;
 abstract class Conta {
     protected double saldo;
     protected String numeroConta;
+    protected double limitechequeespacial;
 
     public Conta(String numeroConta, double saldoInicial) {
         this.numeroConta = numeroConta;
@@ -35,6 +36,9 @@ abstract class Conta {
 
     public double getSaldo() {
         return saldo;
+    }
+    public double getLimitechequeespacial() {
+        return limitechequeespacial;
     }
     public abstract int getTipo();
 

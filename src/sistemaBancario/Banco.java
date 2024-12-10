@@ -7,21 +7,18 @@ import java.util.Scanner;
 
 class Banco {
     public static List<Usuario> usuarios = new ArrayList<>();
-    public static List<ContaCorrentePrincipal> corrente = new ArrayList<>();
-    public static List<ContaPoupanca> poupanca = new ArrayList<>();
     public static List<Conta> contas = new ArrayList<>();
     private Scanner entrada = new Scanner(System.in);
+    private static final String CONTAS_FILE= "conta.txt";
     private static final String USUARIOS_FILE = "usuarios.txt";
-    private static final String CONPRI_FILE = "correnteprincipal.txt";
-    private static final String CONADI_FILE = "correnteadicional.txt";
-    private static final String CONPOP_FILE = "poupança.txt";
+    //private static final String CONPRI_FILE = "correnteprincipal.txt";
+    //private static final String CONADI_FILE = "correnteadicional.txt";
+    //private static final String CONPOP_FILE = "poupança.txt";
 
     public Banco() {
         verificarOuCriarArquivoUsuarios();
+        verificarOuCriarArquivoContas();
         carregarUsuarios();
-        verificarOuCriarArquivoContaPoupança();
-        verificarOuCriarArquivoCorrenteAdicional();
-        verificarOuCriarArquivoCorrentePrincipal();
         //carregarContas();
     }
 
@@ -44,6 +41,8 @@ class Banco {
                     break;
                 case 2:
                     salvarUsuarios();
+                    salvarContaCorrente();
+                    salvarContaPoupanca();
                     sair = true;
                     System.out.println("Obrigado por usar o Sistema Bancário!");
                     break;
@@ -139,10 +138,13 @@ class Banco {
         }
     }
 
-    public void salvarCorrente() {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(CONPRI_FILE))) {
-            for (ContaCorrentePrincipal contaCorrentePrincipal : corrente) {
-                bw.write(contaCorrentePrincipal.getNumeroConta() + ";" + contaCorrentePrincipal.getSaldo()+ ";" + contaCorrentePrincipal.getLimiteChequeEspecial() + ";");
+    public void salvarContaPoupanca() {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(CONTAS_FILE))) {
+            for (Usuario usuario : usuarios) {
+                bw.write(usuario.getNomeUsuario() + ";");
+            }
+            for (Conta conta : contas) {
+                bw.write(conta.getNumeroConta() + ";" + conta.getSaldo()+ ";" + conta.getTipo() + ";");
                 bw.newLine();
             }
         } catch (IOException e) {
@@ -150,10 +152,13 @@ class Banco {
         }
     }
 
-    public void salvarPoupanca() {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(CONPOP_FILE))) {
-            for (ContaPoupanca contaPoupanca : poupanca) {
-                bw.write(contaPoupanca.getNumeroConta() + ";" + contaPoupanca.getSaldo()+ ";");
+    public void salvarContaCorrente() {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(CONTAS_FILE))) {
+            for (Usuario usuario : usuarios) {
+                bw.write(usuario.getNomeUsuario() + ";");
+            }
+            for (Conta contaCorrentePrincipal : contas) {
+                bw.write(contaCorrentePrincipal.getNumeroConta() + ";" + contaCorrentePrincipal.getSaldo()+ ";" + contaCorrentePrincipal.getTipo() + ";" + contaCorrentePrincipal.getLimitechequeespacial() + ";");
                 bw.newLine();
             }
         } catch (IOException e) {
@@ -178,46 +183,21 @@ class Banco {
             }
         }
     }
-    // Criação do arquivo Conta Principal
-    private void verificarOuCriarArquivoCorrentePrincipal() {
-        File arquivo = new File(CONPRI_FILE);
+
+    // Criação do arquivo Contas
+    private void verificarOuCriarArquivoContas() {
+        File arquivo = new File(CONTAS_FILE);
         if (!arquivo.exists()) {
             try {
                 if (arquivo.createNewFile()) {
-                    System.out.println("Arquivo de conta corrente principal não encontrado. Criando arquivo da Conta Corrente Principal...");
+                    System.out.println("Arquivo de contas não encontrado. Criando arquivo das contas...");
                 }
             } catch (IOException e) {
-                System.out.println("Erro ao criar arquivo da Conta Corrente Principal: " + e.getMessage());
+                System.out.println("Erro ao criar arquivo das contas: " + e.getMessage());
             }
         }
     }
 
-    // Criação do arquivo Conta Corrente Adicional
-    private void verificarOuCriarArquivoCorrenteAdicional() {
-        File arquivo = new File(CONADI_FILE);
-        if (!arquivo.exists()) {
-            try {
-                if (arquivo.createNewFile()) {
-                    System.out.println("Arquivo de conta corrente adicional não encontrado. Criando arquivo da Conta Corrente Adicional...");
-                }
-            } catch (IOException e) {
-                System.out.println("Erro ao criar arquivo da Conta Corrente Adicional: " + e.getMessage());
-            }
-        }
-    }
 
-    // Criação do arquivo Conta Corrente Adicional
-    private void verificarOuCriarArquivoContaPoupança() {
-        File arquivo = new File(CONPOP_FILE);
-        if (!arquivo.exists()) {
-            try {
-                if (arquivo.createNewFile()) {
-                    System.out.println("Arquivo de conta corrente poupança não encontrado. Criando arquivo da Conta Corrente Poupança...");
-                }
-            } catch (IOException e) {
-                System.out.println("Erro ao criar arquivo da Conta Corrente Poupança: " + e.getMessage());
-            }
-        }
-    }
 }
 

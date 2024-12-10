@@ -79,6 +79,7 @@ class Gerente extends Usuario {
             String idContaCorrente = String.valueOf(Utils.gerarIdAleatorio());
             ContaCorrentePrincipal novaContaCorrente = new ContaCorrentePrincipal(idContaCorrente, 0.0, limiteChequeEspecial);
             Banco.adicionarConta(novaContaCorrente);
+
             System.out.println("Conta corrente criada com sucesso. ID: " + idContaCorrente);
         }
 
@@ -88,6 +89,7 @@ class Gerente extends Usuario {
             String idContaPoupanca = String.valueOf(Utils.gerarIdAleatorio());
             ContaPoupanca novaContaPoupanca = new ContaPoupanca(idContaPoupanca, 0.0);
             Banco.adicionarConta(novaContaPoupanca);
+
             System.out.println("Conta poupança criada com sucesso. ID: " + idContaPoupanca);
         }
     }
