@@ -33,6 +33,11 @@ class ContaCorrentePrincipal extends Conta {
     }
 
     @Override
+    public int getTipo() {
+        return 1;
+    }
+
+    @Override
     public void exibirDetalhesConta() {
         System.out.println("Conta Corrente Principal - Número: " + numeroConta + ", Saldo: " + saldo + ", Limite Cheque Especial: " + limiteChequeEspecial);
     }

@@ -36,6 +36,7 @@ abstract class Conta {
     public double getSaldo() {
         return saldo;
     }
+    public abstract int getTipo();
 
     public abstract void exibirDetalhesConta();
 }
