@@ -1,0 +1,10 @@
+[Informações do Usuário]
+Nome: Peterson Silva Ribeiro
+CPF: 05872840136
+Telefone: 62984552146
+Senha: 123
+Endereço: 34, 464, Nova Aurora 3, Goianésia-GO
+Tipo de Usuário: Cliente
+[Histórico de Movimentação]
+11/12/2024 19:13:19: Conta Corrente criada. ID: 440846
+11/12/2024 19:13:19: Conta Poupança criada. ID: 279988
