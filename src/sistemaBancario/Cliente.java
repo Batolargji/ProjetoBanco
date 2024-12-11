@@ -1,9 +1,11 @@
 package sistemaBancario;
 
 import java.util.Scanner;
+import java.time.format.DateTimeFormatter;
 
 class Cliente extends Usuario {
     private Scanner entrada = new Scanner(System.in);
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 
     public Cliente(String nome, String senha, String cpf, String telefone, String email, String rua, String numero, String bairro, String cidade, String uf) {
         super(nome, senha, cpf, telefone, email, rua, numero, bairro, cidade, uf);
@@ -69,6 +71,7 @@ class Cliente extends Usuario {
 
             conta.depositar(valor);
             System.out.println("Depósito realizado com sucesso.");
+            RegistroUtils.registrarMovimentacao(idConta, "Depósito realizado no valor de: " + valor);
         } else {
             System.out.println("Conta não encontrada.");
         }
@@ -96,6 +99,7 @@ class Cliente extends Usuario {
                     if (contaOrigem.sacar(valor)) {
                         contaDestino.depositar(valor);
                         System.out.println("Transferência realizada com sucesso.");
+                        RegistroUtils.registrarMovimentacao(idContaDestino, "Transferência realizada para a conta " + idContaDestino + "no valor de: " + valor);
                     } else {
                         System.out.println("Saldo insuficiente na conta de origem.");
                     }
@@ -126,6 +130,7 @@ class Cliente extends Usuario {
             if (this.senha.equals(senha)) {
                 if (conta.sacar(valor)) {
                     System.out.println("Saque realizado com sucesso.");
+                    RegistroUtils.registrarMovimentacao(idConta, "Saque realizado no valor de: " + valor);
                 } else {
                     System.out.println("Saldo insuficiente para realizar o saque.");
                 }
@@ -162,18 +167,33 @@ class Cliente extends Usuario {
         String cidade = entrada.nextLine();
         System.out.print("UF: ");
         String uf = entrada.nextLine();
+        System.out.print("Limite da conta do dependente: ");
+        double limite = entrada.nextDouble();
+        System.out.println("Número da sua conta à ser vinculada: ");
+        String idContaPai = entrada.nextLine();
+        Conta contaPai = Banco.buscarContaPorId(idContaPai);
+
+        if (contaPai != null) {
+            System.out.print("Confirme sua senha: ");
+            String senha = entrada.nextLine();
+            if (this.senha.equals(senha)) {
+
+            }
+        }
+        else {
+            System.out.println("Conta não encontrada");
+        }
 
         Dependente dependente = new Dependente(nomeDependente, senha, cpfDependente, telefone, email, rua, numero, bairro, cidade, uf);
         Banco.adicionarUsuario(dependente);
 
-        String idContaCorrente = String.valueOf(Utils.gerarIdAleatorio());
-        ContaCorrentePrincipal novaContaDependente = new ContaCorrentePrincipal(idContaCorrente, 0.0, 0.0);
+        String idContaAdicional = String.valueOf(Utils.gerarIdAleatorio());
+        ContaCorrenteAdicional novaContaDependente = new ContaCorrenteAdicional(idContaAdicional, contaPai.getSaldo(), idContaPai, limite );
         Banco.adicionarConta(novaContaDependente);
 
-        RegistroUtils.registrarDependente(this.cpf, dependente, idContaCorrente);
+        RegistroUtils.registrarDependente(this.cpf, dependente, idContaAdicional);
 
-        System.out.println("Dependente cadastrado com sucesso. ID da conta corrente: " + idContaCorrente);
-
+        System.out.println("Dependente cadastrado com sucesso. ID da conta corrente: " + idContaAdicional);
     }
 
     private void visualizarLimiteChequeEspecial() {

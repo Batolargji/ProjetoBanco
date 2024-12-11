@@ -59,7 +59,7 @@ public class RegistroUtils {
             // Aqui foi utilizada a concatenação correta do endereço
             writer.write("Endereço: " + dependente.getRua() + ", " + dependente.getNumero() + ", " + dependente.getBairro() + ", " + dependente.getCidade() + "-" + dependente.getUf());
             writer.newLine();
-            writer.write("ID da Conta Corrente: " + idContaDependente);
+            writer.write("ID da Conta Adicional: " + idContaDependente);
             writer.newLine();
             writer.write("----------------------------------");
             writer.newLine();
