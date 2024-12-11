@@ -142,6 +142,7 @@ class Cliente extends Usuario {
         System.out.print("Nome Completo do dependente: ");
         String nomeDependente = entrada.nextLine();
         System.out.print("Nome de usuário do dependente: ");
+        System.out.println();
         String usuarioDependente = entrada.nextLine();
         System.out.print("CPF do dependente (sem caracteres especiais): ");
         String cpfDependente = entrada.nextLine();
@@ -165,7 +166,7 @@ class Cliente extends Usuario {
             entrada.nextLine(); // Consumir nova linha
         }
 
-        Cliente dependente = new Cliente(nomeDependente,usuarioDependente, this.senha, cpfDependente, endereco, telefone);
+        Dependente dependente = new Dependente(nomeDependente,usuarioDependente, this.senha, cpfDependente, endereco, telefone);
         Banco.adicionarUsuario(dependente);
 
         String idContaCorrente = String.valueOf(Utils.gerarIdAleatorio());

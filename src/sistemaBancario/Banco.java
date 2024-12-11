@@ -151,6 +151,10 @@ class Banco {
                             Cliente cliente = new Cliente(dados[0], dados[1], dados[2], dados[3], dados[4], dados[5]);
                             usuarios.add(cliente);
                             break;
+                        case 4:
+                            // cliente
+                            Dependente dependente = new Dependente(dados[0], dados[1], dados[2], dados[3], dados[4], dados[5]);
+                            usuarios.add(dependente);
                         default:
                             System.out.println("Tipo de usuário inválido no arquivo.");
                     }
