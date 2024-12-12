@@ -17,16 +17,25 @@ class ContaCorrentePrincipal extends Conta {
     }
 
     @Override
-    public boolean sacar(double valor) {
+    public boolean sacar(double valor, boolean transferencia) {
         if (valor > 0 && valor <= (saldo + limiteChequeEspecial)) {
             saldo -= valor;
-            if (saldo < 0) {
-                System.out.println("Saque de " + valor + " realizado utilizando cheque especial. Saldo atual: " + 0.0 + ", limite disponível: " + (limiteChequeEspecial + saldo));
-                saldo = 0;
-            } else {
-                System.out.println("Saque de " + valor + " realizado. Saldo atual: " + saldo);
+            if (transferencia == false) {
+                if (saldo < 0) {
+                    System.out.println("Saque de " + valor + " realizado utilizando cheque especial. Saldo atual: " + 0.0 + ", limite disponível: " + (limiteChequeEspecial + saldo));
+                    saldo = 0;
+                } else {
+                    System.out.println("Saque de " + valor + " realizado. Saldo atual: " + saldo);
+                }
+                RegistroUtils.registrarMovimentacao(numeroConta, "Saque: R$ " + valor + Banco.registrarContaExtrato(numeroConta));
             }
-            RegistroUtils.registrarMovimentacao(numeroConta, "Saque: R$ " + valor + Banco.registrarContaExtrato(numeroConta));
+            else if (valor > 0 && valor <= saldo) {
+                saldo -= valor;
+                return true;
+            }
+            else {
+                return false;
+            }
             return true;
         } else {
             System.out.println("Saldo insuficiente, incluindo limite de cheque especial.");

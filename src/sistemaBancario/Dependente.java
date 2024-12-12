@@ -46,7 +46,7 @@ public class Dependente extends Usuario {
             String senha = entrada.nextLine();
 
             if (this.senha.equals(senha)) {
-                if (conta.sacar(valor)) {
+                if (conta.sacar(valor, false)) {
                     System.out.println("Saque realizado com sucesso.");
                 } else {
                     System.out.println("Saldo insuficiente para realizar o saque.");

@@ -94,7 +94,7 @@ class Cliente extends Usuario {
             double valor = entrada.nextDouble();
             entrada.nextLine(); // Consumir nova linha
 
-            conta.depositar(valor);
+            conta.depositar(valor, false);
 
             // Usa o CPF associado ao arquivo do usuário para registrar a movimentação
              // O CPF foi associado no método buscarContaPorId
@@ -126,10 +126,17 @@ class Cliente extends Usuario {
                 String senha = entrada.nextLine();
 
                 if (this.senha.equals(senha)) {
-                    if (contaOrigem.sacar(valor)) {
-                        contaDestino.depositar(valor);
+                    if (contaOrigem.sacar(valor, true)) {
+                        contaDestino.depositar(valor, true);
                         System.out.println("Transferência realizada com sucesso.");
-                        RegistroUtils.registrarMovimentacao(idContaDestino, "Transferência realizada para a conta " + idContaDestino + "no valor de: " + valor);
+                        RegistroUtils.registrarMovimentacao(idContaOrigem, "Transferência realizada para a conta " + idContaDestino + " no valor de: " + valor);
+                        RegistroUtils.registrarMovimentacao(idContaDestino, "Transferência recebida da conta " + idContaOrigem + " no valor de: " + valor);
+                        try {
+                            RegistroUtils.carregarSaldoConta(contaOrigem);
+                            RegistroUtils.carregarSaldoConta(contaDestino);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
                     } else {
                         System.out.println("Saldo insuficiente na conta de origem.");
                     }
@@ -158,7 +165,7 @@ class Cliente extends Usuario {
             String senha = entrada.nextLine();
 
             if (this.senha.equals(senha)) {
-                if (conta.sacar(valor)) {
+                if (conta.sacar(valor, false)) {
                     System.out.println("Saque realizado com sucesso.");
                     RegistroUtils.registrarMovimentacao(idConta, "Saque realizado no valor de: " + valor);
                 } else {

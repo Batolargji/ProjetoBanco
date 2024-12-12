@@ -10,21 +10,25 @@ abstract class Conta {
         this.saldo = saldoInicial;
     }
 
-    public void depositar(double valor) {
+    public void depositar(double valor, boolean transferencia) {
         if (valor > 0) {
             saldo += valor;
-            RegistroUtils.registrarMovimentacao(numeroConta, "Depósito: R$ " + valor + Banco.registrarContaExtrato(numeroConta));
-            System.out.println("Depósito de R$ " + valor + " realizado. Saldo atual: R$ " + saldo);
+            if (transferencia == false) {
+                RegistroUtils.registrarMovimentacao(numeroConta, "Depósito: R$ " + valor + Banco.registrarContaExtrato(numeroConta));
+                System.out.println("Depósito de R$ " + valor + " realizado. Saldo atual: R$ " + saldo);
+            }
         } else {
             System.out.println("Valor inválido para depósito.");
         }
     }
 
-    public boolean sacar(double valor) {
+    public boolean sacar(double valor, boolean transferencia) {
         if (valor > 0 && valor <= saldo) {
             saldo -= valor;
-            RegistroUtils.registrarMovimentacao(numeroConta, "Saque: R$ " + valor + Banco.registrarContaExtrato(numeroConta));
-            System.out.println("Saque de R$ " + valor + " realizado. Saldo atual: R$ " + saldo);
+            if (transferencia == false) {
+                RegistroUtils.registrarMovimentacao(numeroConta, "Saque: R$ " + valor + Banco.registrarContaExtrato(numeroConta));
+                System.out.println("Saque de R$ " + valor + " realizado. Saldo atual: R$ " + saldo);
+            }
             return true;
         } else {
             System.out.println("Saldo insuficiente ou valor inválido.");

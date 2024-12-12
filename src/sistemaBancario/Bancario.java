@@ -71,7 +71,7 @@ class Bancario extends Usuario {
             double valor = entrada.nextDouble();
             entrada.nextLine(); // Consumir nova linha
 
-            conta.depositar(valor);
+            conta.depositar(valor, false);
             System.out.println("Depósito realizado com sucesso.");
             RegistroUtils.carregarSaldoConta(conta);
         } else {
@@ -94,9 +94,17 @@ class Bancario extends Usuario {
                 double valor = entrada.nextDouble();
                 entrada.nextLine(); // Consumir nova linha
 
-                if (contaOrigem.sacar(valor)) {
-                    contaDestino.depositar(valor);
+                if (contaOrigem.sacar(valor, true)) {
+                    contaDestino.depositar(valor, true);
                     System.out.println("Transferência realizada com sucesso.");
+                    RegistroUtils.registrarMovimentacao(idContaOrigem, "Transferência realizada para a conta " + idContaDestino + " no valor de: " + valor);
+                    RegistroUtils.registrarMovimentacao(idContaDestino, "Transferência recebida da conta " + idContaOrigem + " no valor de: " + valor);
+                    try {
+                        RegistroUtils.carregarSaldoConta(contaOrigem);
+                        RegistroUtils.carregarSaldoConta(contaDestino);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 } else {
                     System.out.println("Saldo insuficiente na conta de origem.");
                 }
@@ -118,7 +126,7 @@ class Bancario extends Usuario {
             double valor = entrada.nextDouble();
             entrada.nextLine(); // Consumir nova linha
 
-            if (conta.sacar(valor)) {
+            if (conta.sacar(valor, false)) {
                 System.out.println("Saque realizado com sucesso.");
                 try {
                     RegistroUtils.carregarSaldoConta(conta);
