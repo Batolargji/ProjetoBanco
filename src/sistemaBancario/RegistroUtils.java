@@ -13,17 +13,7 @@ public class RegistroUtils {
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 
     public static void registrarMovimentacao(String cpf, String mensagem) {
-        String nomeArquivo = PASTA_USUARIOS + cpf + ".txt"; // Usa o CPF do usuário para localizar o arquivo
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(nomeArquivo, true))) {
-            String dataHora = LocalDateTime.now().format(FORMATTER);
-            bw.write(dataHora + ": " + mensagem);
-            bw.newLine();
-        } catch (IOException e) {
-            System.out.println("Erro ao registrar movimentação: " + e.getMessage());
-        }
-    }
-    public static void registrarMovimentacaoConta(String numeroConta, String mensagem) {
-        String cpf = Banco.buscarCpfporIDConta(numeroConta);
+        cpf = Banco.buscarCpfporIDConta(cpf);
         String nomeArquivo = PASTA_USUARIOS + cpf + ".txt"; // Usa o CPF do usuário para localizar o arquivo
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(nomeArquivo, true))) {
             String dataHora = LocalDateTime.now().format(FORMATTER);
@@ -40,17 +30,30 @@ public class RegistroUtils {
         Path path = Paths.get(arquivo);
         List<String> linhas = Files.readAllLines(path);
         if (conta.getTipo() == 1) {
+            ContaCorrentePrincipal conta2 = (ContaCorrentePrincipal) conta;
             String novoSaldo = "Saldo da conta corrente: " + conta.getSaldo();
-            System.out.println(linhas);
             linhas.remove(8);
             linhas.add(8,novoSaldo);
             Files.write(path, linhas);
+            carregarLimiteChequeEspecial(conta2);
         }
         else if (conta.getTipo() == 2) {
             String novoSaldo = "Saldo da conta poupanca: " + conta.getSaldo();
             System.out.println(linhas);
             linhas.remove(11);
             linhas.add(11,novoSaldo);
+            Files.write(path, linhas);
+        }
+    }
+    public static void carregarLimiteChequeEspecial(ContaCorrentePrincipal conta) throws IOException {
+        String cpf = Banco.buscarCpfporIDConta(conta.getNumeroConta());
+        String arquivo = "usuarios/" + cpf + ".txt";
+        Path path = Paths.get(arquivo);
+        List<String> linhas = Files.readAllLines(path);
+        if (conta.getTipo() == 1) {
+            String novoCheque = "Limite do cheque especial: " + conta.getLimiteChequeEspecial();
+            linhas.remove(9);
+            linhas.add(9,novoCheque);
             Files.write(path, linhas);
         }
     }

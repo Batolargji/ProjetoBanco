@@ -1,5 +1,6 @@
 package sistemaBancario;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 class Gerente extends Usuario {
@@ -100,6 +101,12 @@ class Gerente extends Usuario {
             entrada.nextLine(); // Consumir nova linha
 
             ((ContaCorrentePrincipal) conta).setLimiteChequeEspecial(novoLimite);
+            ContaCorrentePrincipal conta2 = (ContaCorrentePrincipal) conta;
+            try {
+                RegistroUtils.carregarLimiteChequeEspecial(conta2);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             System.out.println("Limite de cheque especial alterado com sucesso.");
         } else {
             System.out.println("Conta não encontrada ou não é do tipo Conta Corrente.");

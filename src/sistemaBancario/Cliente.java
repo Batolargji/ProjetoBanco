@@ -96,8 +96,7 @@ class Cliente extends Usuario {
             conta.depositar(valor);
 
             // Usa o CPF associado ao arquivo do usuário para registrar a movimentação
-            String cpf = conta.getNumeroConta(); // O CPF foi associado no método buscarContaPorId
-            RegistroUtils.registrarMovimentacao(cpf, "Depósito realizado no valor de: " + valor);
+             // O CPF foi associado no método buscarContaPorId
             RegistroUtils.carregarSaldoConta(conta);
             System.out.println("Depósito realizado com sucesso.");
         } else {

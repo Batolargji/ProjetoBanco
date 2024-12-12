@@ -26,6 +26,7 @@ class ContaCorrentePrincipal extends Conta {
             } else {
                 System.out.println("Saque de " + valor + " realizado. Saldo atual: " + saldo);
             }
+            RegistroUtils.registrarMovimentacao(numeroConta, "Saque: R$ " + valor + Banco.registrarContaExtrato(numeroConta));
             return true;
         } else {
             System.out.println("Saldo insuficiente, incluindo limite de cheque especial.");

@@ -13,7 +13,7 @@ abstract class Conta {
     public void depositar(double valor) {
         if (valor > 0) {
             saldo += valor;
-            RegistroUtils.registrarMovimentacao(numeroConta, "Depósito: R$ " + valor);
+            RegistroUtils.registrarMovimentacao(numeroConta, "Depósito: R$ " + valor + Banco.registrarContaExtrato(numeroConta));
             System.out.println("Depósito de R$ " + valor + " realizado. Saldo atual: R$ " + saldo);
         } else {
             System.out.println("Valor inválido para depósito.");
@@ -23,7 +23,7 @@ abstract class Conta {
     public boolean sacar(double valor) {
         if (valor > 0 && valor <= saldo) {
             saldo -= valor;
-            RegistroUtils.registrarMovimentacao(numeroConta, "Saque: R$ " + valor);
+            RegistroUtils.registrarMovimentacao(numeroConta, "Saque: R$ " + valor + Banco.registrarContaExtrato(numeroConta));
             System.out.println("Saque de R$ " + valor + " realizado. Saldo atual: R$ " + saldo);
             return true;
         } else {
@@ -39,9 +39,9 @@ abstract class Conta {
     public double getSaldo() {
         return saldo;
     }
-    public double getLimitechequeespacial() {
+    /*public double getLimitechequeespacial() {
         return limitechequeespacial;
-    }
+    }*/
     public abstract int getTipo();
 
     public abstract void exibirDetalhesConta();

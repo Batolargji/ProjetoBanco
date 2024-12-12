@@ -426,6 +426,20 @@ class Banco {
         }
     }
 
+    public static String registrarContaExtrato(String idconta) {
+        Conta conta = buscarContaPorId(idconta);
+        assert conta != null;
+        if(conta.getTipo() == 1) {
+            return " Na Conta Corrente. ID da Conta: " + idconta;
+        }
+       else if (conta.getTipo() == 2) {
+            return " Na Conta Poupança. ID da Conta: " + idconta;
+        }
+       else {
+           return "";
+        }
+    }
+
     private void criarPastaUsuarios() {
         File pasta = new File(PASTA_USUARIOS);
         if (!pasta.exists()) {
