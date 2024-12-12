@@ -21,7 +21,8 @@ class ContaCorrentePrincipal extends Conta {
         if (valor > 0 && valor <= (saldo + limiteChequeEspecial)) {
             saldo -= valor;
             if (saldo < 0) {
-                System.out.println("Saque de " + valor + " realizado utilizando cheque especial. Saldo atual: " + saldo + ", limite disponível: " + (limiteChequeEspecial + saldo));
+                System.out.println("Saque de " + valor + " realizado utilizando cheque especial. Saldo atual: " + 0.0 + ", limite disponível: " + (limiteChequeEspecial + saldo));
+                saldo = 0;
             } else {
                 System.out.println("Saque de " + valor + " realizado. Saldo atual: " + saldo);
             }

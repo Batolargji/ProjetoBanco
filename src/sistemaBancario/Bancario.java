@@ -72,7 +72,7 @@ class Bancario extends Usuario {
 
             conta.depositar(valor);
             System.out.println("Depósito realizado com sucesso.");
-            RegistroUtils.carregarSaldoConta(conta, "73552275134");
+            RegistroUtils.carregarSaldoConta(conta);
         } else {
             System.out.println("Conta não encontrada.");
         }
@@ -119,6 +119,11 @@ class Bancario extends Usuario {
 
             if (conta.sacar(valor)) {
                 System.out.println("Saque realizado com sucesso.");
+                try {
+                    RegistroUtils.carregarSaldoConta(conta);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             } else {
                 System.out.println("Saldo insuficiente para realizar o saque.");
             }

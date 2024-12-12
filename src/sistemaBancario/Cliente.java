@@ -1,5 +1,6 @@
 package sistemaBancario;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Scanner;
 import java.time.format.DateTimeFormatter;
@@ -34,7 +35,11 @@ class Cliente extends Usuario {
 
             switch (opcao) {
                 case 1:
-                    depositarEmContaPropria();
+                    try {
+                        depositarEmContaPropria();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                     break;
                 case 2:
                     transferirEntreContas();
@@ -78,7 +83,7 @@ class Cliente extends Usuario {
         }
     }*/
     
-    private void depositarEmContaPropria() {
+    private void depositarEmContaPropria() throws IOException {
         System.out.print("Informe o ID da sua conta para depósito: ");
         String idConta = entrada.nextLine();
         Conta conta = Banco.buscarContaPorId(idConta);
@@ -93,7 +98,7 @@ class Cliente extends Usuario {
             // Usa o CPF associado ao arquivo do usuário para registrar a movimentação
             String cpf = conta.getNumeroConta(); // O CPF foi associado no método buscarContaPorId
             RegistroUtils.registrarMovimentacao(cpf, "Depósito realizado no valor de: " + valor);
-
+            RegistroUtils.carregarSaldoConta(conta);
             System.out.println("Depósito realizado com sucesso.");
         } else {
             System.out.println("Conta não encontrada.");

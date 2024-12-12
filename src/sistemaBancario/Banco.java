@@ -214,13 +214,13 @@ class Banco {
 
                 if (idCorrente.equals(idConta)) {
                     ContaCorrentePrincipal contaCorrente = new ContaCorrentePrincipal(idCorrente, saldoCorrente, limiteChequeEspecial);
-                    contaCorrente.setNumeroConta(cpf); // Associa o CPF ao número da conta
+                    //contaCorrente.setNumeroConta(cpf); // Associa o CPF ao número da conta
                     return contaCorrente;
                 }
 
                 if (idPoupanca.equals(idConta)) {
                     ContaPoupanca contaPoupanca = new ContaPoupanca(idPoupanca, saldoPoupanca);
-                    contaPoupanca.setNumeroConta(cpf); // Associa o CPF ao número da conta
+                    //contaPoupanca.setNumeroConta(cpf); // Associa o CPF ao número da conta
                     return contaPoupanca;
                 }
             } catch (IOException | NumberFormatException e) {
@@ -232,8 +232,47 @@ class Banco {
         return null;
     }
 
+    public static String buscarCpfporIDConta(String idConta) {
+        File pasta = new File(PASTA_USUARIOS);
+        if (!pasta.exists() || !pasta.isDirectory()) {
+            System.out.println("Pasta de usuários não encontrada.");
+            return null;
+        }
 
-    
+        for (File arquivo : pasta.listFiles()) {
+            try (BufferedReader br = new BufferedReader(new FileReader(arquivo))) {
+                String linha;
+                String cpf = "";
+                String idCorrente = "";
+                String idPoupanca = "";
+                double saldoCorrente = 0;
+                double saldoPoupanca = 0;
+                double limiteChequeEspecial = 0;
+
+                while ((linha = br.readLine()) != null) {
+                    if (linha.startsWith("CPF: ")) cpf = linha.substring(5).trim();
+                    else if (linha.startsWith("ID da Conta Corrente: ")) idCorrente = linha.substring(22).trim();
+                    else if (linha.startsWith("ID da Conta Poupança: ")) idPoupanca = linha.substring(21).trim();
+                }
+
+                if (idCorrente.equals(idConta)) {
+                    return cpf;
+                }
+
+                if (idPoupanca.equals(idConta)) {
+                    return cpf;
+                }
+            } catch (IOException | NumberFormatException e) {
+                System.out.println("Erro ao processar o arquivo para achar cpf: " + e.getMessage());
+            }
+        }
+
+        System.out.println("Conta não encontrada para achar cpf.");
+        return null;
+    }
+
+
+
     public static void carregarSaldoConta(Conta conta, String cpf) {
         String arquivo = "usuarios/" + cpf + ".txt";
         try (BufferedReader br = new BufferedReader(new FileReader(arquivo))) {
