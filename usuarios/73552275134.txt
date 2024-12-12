@@ -1,0 +1,17 @@
+[Informações do Usuário]
+Nome: Marcos Lima
+CPF: 73552275134
+Senha: 12345
+Telefone: 62900000000
+Endereço: 12, 34, 56, 78-GO
+Tipo de Usuário: 3
+ID da Conta Corrente: 723742
+Saldo da conta corrente: 0.0
+Limite do cheque especial: 1900.0
+ID da Conta Poupança: 529276
+Saldo da conta poupanca: 2500.0
+[Histórico de Movimentação]
+12/12/2024 17:42:06: Conta Corrente criada. ID: 723742
+12/12/2024 17:42:06: Conta Poupança criada. ID: 529276
+12/12/2024 17:45:18: Depósito: R$ 2500.0. Na Conta Poupança. ID da Conta: 529276
+12/12/2024 17:45:18: Transferência recebida da conta 904919 no valor de: 2500.0

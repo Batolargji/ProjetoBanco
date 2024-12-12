@@ -1,0 +1,12 @@
+[Informações do Dependente]
+Nome: Alves
+CPF: 71420607430
+Senha: 123
+Telefone: 231434
+E-mail: efew
+Endereço: 34, 23, 232, 12-312
+Tipo de Usuário: 4
+ID da Conta Corrente Adicional: 147775
+ID da Conta Corrente Principal: 72342
+Limite da Conta: 500.0
+----------------------------------

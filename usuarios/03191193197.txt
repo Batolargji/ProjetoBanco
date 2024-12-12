@@ -1,0 +1,17 @@
+[Informações do Usuário]
+Nome: Mateus Alves
+CPF: 03191193197
+Senha: 12345
+Telefone: 62900000000
+Endereço: 12, 34, Carrilho, Goianésia-GO
+Tipo de Usuário: 3
+ID da Conta Corrente: 942727
+Saldo da conta corrente: 1000.0
+Limite do cheque especial: 1978.0
+ID da Conta Poupança: 867580
+Saldo da conta poupança: 765.0
+[Histórico de Movimentação]
+12/12/2024 16:50:02: Conta Corrente criada. ID: 942727
+12/12/2024 16:50:02: Conta Poupança criada. ID: 867580
+12/12/2024 16:54:16: Depósito: R$ 765.0. Na Conta Poupança. ID da Conta: 867580
+12/12/2024 17:11:26: Depósito: R$ 2500.0. Na Conta Poupança. ID da Conta: 867580
