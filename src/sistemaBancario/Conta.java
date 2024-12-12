@@ -54,9 +54,6 @@ abstract class Conta {
 		this.numeroConta = numeroConta;
 	}
 
-	public void setLimitechequeespacial(double limitechequeespacial) {
-		this.limitechequeespacial = limitechequeespacial;
-	}
     
     
     

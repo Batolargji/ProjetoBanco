@@ -17,6 +17,8 @@ class Banco {
     }
 
     public void iniciarSistema() {
+        //Ao iniciar sistema, inserir o método
+        Banco.debugListarContas();
         System.out.println("Bem-vindo ao Sistema Bancário!");
         boolean sair = false;
         while (!sair) {
@@ -430,10 +432,10 @@ class Banco {
         Conta conta = buscarContaPorId(idconta);
         assert conta != null;
         if(conta.getTipo() == 1) {
-            return " Na Conta Corrente. ID da Conta: " + idconta;
+            return ". Na Conta Corrente. ID da Conta: " + idconta;
         }
        else if (conta.getTipo() == 2) {
-            return " Na Conta Poupança. ID da Conta: " + idconta;
+            return ". Na Conta Poupança. ID da Conta: " + idconta;
         }
        else {
            return "";
@@ -448,6 +450,25 @@ class Banco {
             } else {
                 System.out.println("Erro ao criar a pasta de usuários.");
             }
+        }
+    }
+    public static List<Conta> buscarContasPorCpf(String cpf) {
+        List<Conta> contasDoCliente = new ArrayList<>();
+
+        for (Conta conta : contas) {
+            String cpfAssociado = buscarCpfporIDConta(conta.getNumeroConta());
+            if (cpfAssociado != null && cpfAssociado.equals(cpf)) {
+                contasDoCliente.add(conta);
+            }
+        }
+
+        return contasDoCliente;
+    }
+
+    public static void debugListarContas() {
+        System.out.println("Contas carregadas:");
+        for (Conta conta : contas) {
+            conta.exibirDetalhesConta();
         }
     }
 }

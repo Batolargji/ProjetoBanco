@@ -2,6 +2,7 @@ package sistemaBancario;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Scanner;
 import java.time.format.DateTimeFormatter;
 
@@ -237,13 +238,18 @@ class Cliente extends Usuario {
 
     private void visualizarContasCadastradas() {
         System.out.println("Visualizando suas contas cadastradas:");
-        for (Conta conta : Banco.contas) {
-            if (conta.getNumeroConta().startsWith(cpf)) { // Aqui utilizamos os primeiros 3 dígitos do CPF para identificar as contas do cliente
-                conta.exibirDetalhesConta();
+        // Use o CPF do cliente atual (this)
+        List<Conta> contasDoCliente = Banco.buscarContasPorCpf(this.getCpf());
+
+        if (contasDoCliente.isEmpty()) {
+            System.out.println("Nenhuma conta cadastrada.");
+        } else {
+            for (Conta conta : contasDoCliente) {
+                conta.exibirDetalhesConta(); // Exibe os detalhes de cada conta
             }
         }
     }
-    
+
     public void visualizarSaldos() {
         System.out.println("Exibindo saldos para o cliente: " + nome);
         for (Conta conta : Banco.contas) {

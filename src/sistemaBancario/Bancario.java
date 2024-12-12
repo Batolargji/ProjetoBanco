@@ -1,6 +1,7 @@
 package sistemaBancario;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Scanner;
 
 class Bancario extends Usuario {
@@ -135,6 +136,22 @@ class Bancario extends Usuario {
     public void visualizarSaldosClientes() {
         System.out.println("Exibindo saldos de todas as contas:");
         Banco.listarTodasAsContas();
+    }
+    private void visualizarContasPorCpf() {
+        Scanner entrada = new Scanner(System.in);
+        System.out.print("Informe o CPF do cliente: ");
+        String cpf = entrada.nextLine();
+
+        System.out.println("Visualizando contas cadastradas para o CPF: " + cpf);
+        List<Conta> contasDoCliente = Banco.buscarContasPorCpf(cpf);
+
+        if (contasDoCliente.isEmpty()) {
+            System.out.println("Nenhuma conta cadastrada para o CPF informado.");
+        } else {
+            for (Conta conta : contasDoCliente) {
+                conta.exibirDetalhesConta();
+            }
+        }
     }
 }
 
