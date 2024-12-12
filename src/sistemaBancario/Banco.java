@@ -86,6 +86,8 @@ class Banco {
         
         Usuario novoUsuario = null;
         switch (tipo) {
+            case "4" :
+                novoUsuario = new Dependente("Nome Exemplo", "senha", cpf, "cpfpai", "telefone", "email@exemplo.com", "Rua Exemplo", "123", "Bairro Exemplo", "Cidade Exemplo", "UF");
         	case "3":
             novoUsuario = new Cliente("Nome Exemplo", "senha", cpf, "telefone", "email@exemplo.com", "Rua Exemplo", "123", "Bairro Exemplo", "Cidade Exemplo", "UF");
             	break;

@@ -48,9 +48,9 @@ class Cliente extends Usuario {
                 case 3:
                     sacarDeConta();
                     break;
-               /* case 4:
+                case 4:
                     cadastrarDependente();
-                    break;*/
+                    break;
                 case 5:
                     visualizarLimiteChequeEspecial();
                     break;
@@ -66,24 +66,6 @@ class Cliente extends Usuario {
         }
     }
 
-    /*private void depositarEmContaPropria() {
-    	System.out.print("Informe o ID da sua conta para depósito: ");
-        String idConta = entrada.nextLine();
-        Conta conta = Banco.buscarContaPorId(idConta);
-
-        if (conta != null) { // Certifique-se de que a conta não é nula
-            System.out.print("Informe o valor do depósito: ");
-            double valor = entrada.nextDouble();
-            entrada.nextLine(); // Consumir nova linha
-
-            conta.depositar(valor);
-            System.out.println("Depósito realizado com sucesso.");
-            RegistroUtils.registrarMovimentacao(cpf, "Depósito realizado no valor de: " + valor);
-        } else {
-            System.out.println("Erro: Conta não encontrada. Operação cancelada.");
-        }
-    }*/
-    
     private void depositarEmContaPropria() throws IOException {
         System.out.print("Informe o ID da sua conta para depósito: ");
         String idConta = entrada.nextLine();
@@ -218,7 +200,8 @@ class Cliente extends Usuario {
         Banco.adicionarConta(novaContaDependente);
         Banco.adicionarDependente(dependente, novaContaDependente);
 
-        System.out.println("Dependente cadastrado com sucesso. ID da conta corrente: " + idContaCorrente);
+
+        System.out.println("Dependente cadastrado com sucesso. ID da conta corrente adicional: " + idContaCorrente);
 
     }
 

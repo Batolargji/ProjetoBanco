@@ -87,8 +87,8 @@ class Gerente extends Usuario {
             Banco.adicionarUsuario(novoCliente, novaContaCorrente, novaContaPoupanca);
             Banco.adicionarConta(novaContaCorrente);
             Banco.adicionarConta(novaContaPoupanca);
-            RegistroUtils.registrarMovimentacao(cpf, "Conta Corrente criada. ID: " + idContaCorrente);
-            RegistroUtils.registrarMovimentacao(cpf, "Conta Poupança criada. ID: " + idContaPoupanca);
+            RegistroUtils.registrarCriacao(cpf, "Conta Corrente criada. ID: " + idContaCorrente);
+            RegistroUtils.registrarCriacao(cpf, "Conta Poupança criada. ID: " + idContaPoupanca);
             acessarSistema();
         }
 

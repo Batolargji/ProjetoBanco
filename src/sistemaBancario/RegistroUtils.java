@@ -23,6 +23,16 @@ public class RegistroUtils {
             System.out.println("Erro ao registrar movimentação: " + e.getMessage());
         }
     }
+    public static void registrarCriacao(String cpf, String mensagem) {
+        String nomeArquivo = PASTA_USUARIOS + cpf + ".txt"; // Usa o CPF do usuário para localizar o arquivo
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(nomeArquivo, true))) {
+            String dataHora = LocalDateTime.now().format(FORMATTER);
+            bw.write(dataHora + ": " + mensagem);
+            bw.newLine();
+        } catch (IOException e) {
+            System.out.println("Erro ao registrar movimentação: " + e.getMessage());
+        }
+    }
 
     public static void carregarSaldoConta(Conta conta) throws IOException {
         String cpf = Banco.buscarCpfporIDConta(conta.getNumeroConta());
@@ -111,6 +121,8 @@ public class RegistroUtils {
             writer.newLine();
             // Aqui foi utilizada a concatenação correta do endereço
             writer.write("Endereço: " + dependente.getRua() + ", " + dependente.getNumero() + ", " + dependente.getBairro() + ", " + dependente.getCidade() + "-" + dependente.getUf());
+            writer.newLine();
+            writer.write("Tipo de Usuário: " + dependente.getTipo());
             writer.newLine();
             writer.write("ID da Conta Corrente Adicional: " + ContaDependente.getNumeroConta());
             writer.newLine();
