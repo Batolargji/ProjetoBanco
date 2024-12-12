@@ -112,6 +112,12 @@ class Banco {
         System.out.println("Usuário adicionado ao sistema.");
     }
 
+    public static void adicionarDependente(Dependente dependente, ContaCorrenteAdicional contaAdicional ) {
+        usuarios.add(dependente);
+        RegistroUtils.registrarDependente(dependente,contaAdicional);
+        System.out.println("Usuário adicionado ao sistema.");
+    }
+
     public static void adicionarConta(Conta conta) {
         contas.add(conta);
         System.out.println("Conta adicionada ao sistema.");
@@ -122,72 +128,7 @@ class Banco {
             conta.exibirDetalhesConta();
         }
     }
-    
-    /*public static Conta buscarContaPorId(String idConta) {
-        Scanner input = new Scanner(System.in);
-        System.out.print("Digite o CPF do titular da conta: ");
-        String cpf = input.nextLine().replaceAll("[^\\d]", ""); // Remove caracteres especiais do CPF
-        String arquivoUsuario = PASTA_USUARIOS + cpf + ".txt";
-        File arquivo = new File(arquivoUsuario);
 
-        if (arquivo.exists()) {
-            try (BufferedReader br = new BufferedReader(new FileReader(arquivo))) {
-                String linha;
-                while ((linha = br.readLine()) != null) {
-                    if (linha.startsWith("ID da Conta Corrente: ")) {
-                        String id = linha.substring("ID da Conta Corrente: ".length()).trim();
-                        if (id.equals(idConta)) {
-                            return criarContaCorrente(idConta);
-                        }
-                    } else if (linha.startsWith("ID da Conta Poupança: ")) {
-                        String id = linha.substring("ID da Conta Poupança: ".length()).trim();
-                        if (id.equals(idConta)) {
-                            return criarContaPoupanca(idConta);
-                        }
-                    }
-                }
-            } catch (IOException e) {
-                System.out.println("Erro ao ler o arquivo de contas. " + e.getMessage());
-            }
-        } else {
-            System.out.println("Conta não encontrada para o CPF informado.");
-        }
-        return null;
-    }*/
-
-   /* public static void carregarSaldoConta(String idConta, String cpf) {
-    	 Scanner input = new Scanner(System.in);
-         String arquivo = "usuarios/" + cpf + ".txt";
-         System.out.println("Entrei aqui. ");
-        try (BufferedReader br = new BufferedReader(new FileReader(arquivo))) {
-            String linha;
-            while ((linha = br.readLine()) != null) {
-                if (linha.startsWith("Saldo da conta corrente: ")) {
-                	ContaCorrentePrincipal conta = (ContaCorrentePrincipal) criarContaCorrente(idConta);
-                    double novoSaldo = Double.parseDouble(linha);
-                    conta.saldo = novoSaldo;
-                } else if (linha.startsWith("Saldo da conta poupança: ")) {
-                	ContaPoupanca conta = (ContaPoupanca) criarContaPoupanca(idConta);
-                    double novoSaldo = Double.parseDouble(linha);
-                    conta.saldo = novoSaldo;
-                }
-            }
-        } catch (IOException e) {
-            System.out.println("Erro ao carregar saldo da conta: " + e.getMessage());
-        }
-    }*/
-    
-    /*public static Conta buscarContaPorId(String idConta) {
-        for (Conta conta : contas) {
-            if (conta.getNumeroConta().equals(idConta)) {
-                carregarSaldoConta(conta); // Atualiza o saldo ao buscar a conta
-                return conta;
-            }
-        }
-        System.out.println("Conta não encontrada para o ID fornecido.");
-        return null;
-    }*/
-    
     public static Conta buscarContaPorId(String idConta) {
         File pasta = new File(PASTA_USUARIOS);
         if (!pasta.exists() || !pasta.isDirectory()) {
@@ -201,6 +142,8 @@ class Banco {
                 String cpf = "";
                 String idCorrente = "";
                 String idPoupanca = "";
+                String idAdicional = "";
+                double limiteAdicional = 0;
                 double saldoCorrente = 0;
                 double saldoPoupanca = 0;
                 double limiteChequeEspecial = 0;
@@ -212,6 +155,8 @@ class Banco {
                     else if (linha.startsWith("Limite do cheque especial: ")) limiteChequeEspecial = Double.parseDouble(linha.substring(27).trim());
                     else if (linha.startsWith("ID da Conta Poupança: ")) idPoupanca = linha.substring(21).trim();
                     else if (linha.startsWith("Saldo da conta poupança: ")) saldoPoupanca = Double.parseDouble(linha.substring(24).trim());
+                    else if (linha.startsWith("ID da Conta Corrente adicional: ")) idAdicional = linha.substring(21).trim();
+                    else if (linha.startsWith("Limite da conta corrente adiconal: ")) limiteAdicional = Double.parseDouble(linha.substring(24).trim());
                 }
 
                 if (idCorrente.equals(idConta)) {
@@ -224,6 +169,10 @@ class Banco {
                     ContaPoupanca contaPoupanca = new ContaPoupanca(idPoupanca, saldoPoupanca);
                     //contaPoupanca.setNumeroConta(cpf); // Associa o CPF ao número da conta
                     return contaPoupanca;
+                }
+                if (idAdicional.equals(idConta)) {
+                    ContaCorrenteAdicional contaCorrenteAdicional = new ContaCorrenteAdicional(idAdicional,limiteAdicional, idCorrente);
+                    return contaCorrenteAdicional;
                 }
             } catch (IOException | NumberFormatException e) {
                 System.out.println("Erro ao processar o arquivo: " + e.getMessage());

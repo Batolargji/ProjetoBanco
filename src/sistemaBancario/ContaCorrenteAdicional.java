@@ -2,33 +2,41 @@ package sistemaBancario;
 
 public class ContaCorrenteAdicional extends Conta {
     private double limite;
-    private String numeroPrincipal;
-
-    public ContaCorrenteAdicional(String numeroConta, double saldo, String numeroPrincipal, double limite  ) {
-        super(numeroConta, saldo);
-        this.numeroPrincipal = numeroPrincipal;
+    private String numeroPai;
+    private double saldo = 0;
+    public ContaCorrenteAdicional(String numeroConta, double limite, String numeroPai  ) {
+        super(numeroConta, 0.0);
+        this.numeroPai = numeroPai;
         this.limite = limite;
     }
 
     public boolean sacar(double valor) {
-        if (valor > 0 && valor <= saldo) {
+        Conta conta = Banco.buscarContaPorId(numeroPai);
+        saldo = conta.getSaldo();
+        if (valor > 0 && valor <= limite && valor <= saldo) {
             saldo -= valor;
-            String mensagem = "Saque de " + valor + " realizado. Saldo atual: " + saldo;
-            RegistroUtils.registrarMovimentacao(numeroConta, mensagem);
-            System.out.println(mensagem);
+            limite -= valor;
+            RegistroUtils.registrarMovimentacao(numeroConta, "Saque de " + valor + " realizado.");
+            RegistroUtils.registrarMovimentacao(numeroPai, "Saque de " + valor + " realizado pelo dependente.");
+            System.out.println("Saque de " + valor + " realizado. Limite atual: " + limite);
             return true;
-        } else if (valor <= saldo) {
-            System.out.println("Saldo insuficiente ou valor inválido.");
-            return false;
         }
         else if (valor < 0 && valor > (limite)) {
             System.out.println("Você excedeu o seu limite nenhuma operação foi realizado.");
             return false;
         }
         else {
-            System.out.println("Você excedeu o saldo da conta principal, nenhuma operação foi realizada.");
+            System.out.println("Você excedeu o saldo da conta principal ou inseriu um valor inválido, nenhuma operação foi realizada.");
             return false;
         }
+    }
+
+    public String getNumeroPai() {
+        return numeroPai;
+    }
+
+    public void setNumeroPai(String numeroPai) {
+        this.numeroPai = numeroPai;
     }
 
     public double getLimite() {
@@ -45,14 +53,6 @@ public class ContaCorrenteAdicional extends Conta {
 
     public void setNumeroConta(String numeroConta) {
         this.numeroConta = numeroConta;
-    }
-
-    public String getNumeroPrincipal() {
-        return numeroPrincipal;
-    }
-
-    public void setNumeroPrincipal(String numeroPrincipal) {
-        this.numeroPrincipal = numeroPrincipal;
     }
 
     public int getTipo() {

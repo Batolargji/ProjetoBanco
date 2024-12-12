@@ -1,9 +1,10 @@
 package sistemaBancario;
 import java.util.Scanner;
 public class Dependente extends Usuario {
-    private Scanner entrada = new Scanner(System.in);
-    public Dependente(String nome, String senha, String cpf, String telefone, String email, String rua, String numero, String bairro, String cidade, String uf) {
+    private String cpfpai;
+    public Dependente(String nome, String senha, String cpf, String cpfpai, String telefone, String email, String rua, String numero, String bairro, String cidade, String uf) {
         super(nome, senha, cpf, telefone, email, rua, numero, bairro, cidade, uf);
+        this.cpfpai = cpfpai;
     }
 
     @Override
@@ -11,10 +12,20 @@ public class Dependente extends Usuario {
         return 4;
     }
 
+
+    public String getCpfpai() {
+        return cpfpai;
+    }
+
+    public void setCpfpai(String cpfpai) {
+        this.cpfpai = cpfpai;
+    }
+
     @Override
     public void acessarSistema() {
         boolean sair = false;
         while (!sair) {
+            Scanner entrada = new Scanner(System.in);
             System.out.println("\nBem-vindo, Cliente dependente: " + nome);
             System.out.println("1. Sacar de Conta");
             System.out.println("2. Sair");
@@ -33,6 +44,7 @@ public class Dependente extends Usuario {
         }
     }
     private void sacarDeConta() {
+        Scanner entrada = new Scanner(System.in);
         System.out.print("Informe o ID da sua conta para saque: ");
         String idConta = entrada.nextLine();
         Conta conta = Banco.buscarContaPorId(idConta);
@@ -46,8 +58,9 @@ public class Dependente extends Usuario {
             String senha = entrada.nextLine();
 
             if (this.senha.equals(senha)) {
-                if (conta.sacar(valor, false)) {
+                if (conta.sacar(valor, true)) {
                     System.out.println("Saque realizado com sucesso.");
+
                 } else {
                     System.out.println("Saldo insuficiente para realizar o saque.");
                 }

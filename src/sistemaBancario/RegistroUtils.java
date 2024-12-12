@@ -93,11 +93,11 @@ public class RegistroUtils {
         }
     }
     
-    public static void registrarDependente(String cpfTitular, Dependente dependente, String idContaDependente) {
-        String arquivoTitular = "usuarios/" + cpfTitular + ".txt";
+    public static void registrarDependente( Dependente dependente, ContaCorrenteAdicional ContaDependente) {
+        String arquivoTitular = "usuarios/" + dependente.getCpf() + ".txt";
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(arquivoTitular, true))) {
-            writer.write("[Dependente Adicionado]");
+            writer.write("[Informações do Dependente]");
             writer.newLine();
             writer.write("Nome: " + dependente.getNome());
             writer.newLine();
@@ -112,7 +112,11 @@ public class RegistroUtils {
             // Aqui foi utilizada a concatenação correta do endereço
             writer.write("Endereço: " + dependente.getRua() + ", " + dependente.getNumero() + ", " + dependente.getBairro() + ", " + dependente.getCidade() + "-" + dependente.getUf());
             writer.newLine();
-            writer.write("ID da Conta Corrente: " + idContaDependente);
+            writer.write("ID da Conta Corrente Adicional: " + ContaDependente.getNumeroConta());
+            writer.newLine();
+            writer.write("ID da Conta Corrente Principal: " + ContaDependente.getNumeroPai());
+            writer.newLine();
+            writer.write("Limite da Conta: " + ContaDependente.getLimite());
             writer.newLine();
             writer.write("----------------------------------");
             writer.newLine();

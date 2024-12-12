@@ -179,17 +179,22 @@ class Cliente extends Usuario {
         }
     }
 
-   /* private void cadastrarDependente() {
+    private void cadastrarDependente() {
         System.out.print("Nome Completo do dependente: ");
         String nomeDependente = entrada.nextLine();
         System.out.print("CPF do dependente (sem caracteres especiais): ");
         String cpfDependente = entrada.nextLine();
+        System.out.print("CPF do Responsável (sem caracteres especiais): ");
+        String cpfPai = entrada.nextLine();
+        System.out.print("Número da conta do responsável: ");
+        String idPai = entrada.nextLine();
 
         while (!ValidadorCPF.validarCPF(cpfDependente)) {
             System.out.println("CPF inválido. Por favor, insira um CPF válido.");
             cpfDependente = entrada.nextLine();
         }
-
+        System.out.print("Senha para a conta dependente: ");
+        String senha = entrada.nextLine();
         System.out.print("Telefone do dependente: ");
         String telefone = entrada.nextLine();
         System.out.print("E-mail do dependente: ");
@@ -204,31 +209,18 @@ class Cliente extends Usuario {
         String cidade = entrada.nextLine();
         System.out.print("UF: ");
         String uf = entrada.nextLine();
+        System.out.print("Limite da conta dependente: ");
+        double limite = entrada.nextDouble();
 
-        Dependente dependente = new Dependente(nomeDependente, senha, cpfDependente, telefone, email, rua, numero, bairro, cidade, uf);
-        Banco.adicionarUsuario(dependente);
-
+        Dependente dependente = new Dependente(nomeDependente, senha, cpfDependente,cpfPai, telefone, email, rua, numero, bairro, cidade, uf);
         String idContaCorrente = String.valueOf(Utils.gerarIdAleatorio());
-        ContaCorrentePrincipal novaContaDependente = new ContaCorrentePrincipal(idContaCorrente, 0.0, 0.0);
+        ContaCorrenteAdicional novaContaDependente = new ContaCorrenteAdicional(idContaCorrente, limite, idPai);
         Banco.adicionarConta(novaContaDependente);
-
-        RegistroUtils.registrarDependente(this.cpf, dependente, idContaCorrente);
+        Banco.adicionarDependente(dependente, novaContaDependente);
 
         System.out.println("Dependente cadastrado com sucesso. ID da conta corrente: " + idContaCorrente);
-        
-        Dependente dependente1 = new Dependente(nomeDependente, senha, cpfDependente, telefone, email, rua, numero, bairro, cidade, uf);
-        Banco.adicionarUsuario(dependente1);
 
-        String idContaCorrente1 = String.valueOf(Utils.gerarIdAleatorio());
-        ContaCorrentePrincipal novaContaDependente1 = new ContaCorrentePrincipal(idContaCorrente1, 0.0, 0.0);
-        Banco.adicionarConta(novaContaDependente1);
-
-        // Registrar dados do dependente no arquivo do titular
-        RegistroUtils.registrarDependente(this.cpf, dependente1, idContaCorrente1);
-
-        System.out.println("Dependente cadastrado com sucesso. ID da conta corrente: " + idContaCorrente1);
-
-    }*/
+    }
 
     private void visualizarLimiteChequeEspecial() {
         System.out.print("Informe o ID da sua conta corrente: ");
