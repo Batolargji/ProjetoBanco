@@ -1,0 +1,7 @@
+[Informações do Usuário]
+Nome: Pedro Paulo Freitas Celestino
+CPF: 04897539145
+Telefone: 62985207523
+Endereço: Rua 16A, N68, Setor Universitário, Goianésia/GO
+Tipo de Usuário: 3
+[Histórico de Movimentação]

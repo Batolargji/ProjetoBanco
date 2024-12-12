@@ -1,0 +1,9 @@
+[Informações do Usuário]
+Nome: Mateus Araújo
+CPF: 03191193197
+Telefone: 62900000000
+Endereço: 20, 480, Parque das Palmeiras, Goianésia-GO\
+Tipo de Usuário: 3
+[Histórico de Movimentação]
+11/12/2024 19:50:26: Conta Corrente criada. ID: 382488
+11/12/2024 19:50:32: Conta Poupança criada. ID: 621171

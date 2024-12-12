@@ -1,0 +1,24 @@
+[Informações do Usuário]
+Nome: Marcos Lima
+CPF: 73552275134
+Senha: 12345
+Telefone: 62900000000
+Endereço: 34, 56, 78, Goianésia-GO
+Tipo de Usuário: 3
+ID da Conta Corrente: 909090
+Saldo da conta corrente: 0.0
+Limite do cheque especial: 1500.0
+ID da Conta Poupança: 130095
+Saldo da conta poupança: 0.0
+[Histórico de Movimentação]
+11/12/2024 21:58:43: Conta Corrente criada. ID: 909090
+11/12/2024 21:58:43: Conta Poupança criada. ID: 130095
+12/12/2024 00:55:43: Depósito realizado no valor de: 789.0
+12/12/2024 00:57:08: Depósito realizado no valor de: 122.0
+12/12/2024 01:01:16: Depósito realizado no valor de: 999.0
+12/12/2024 01:25:20: Depósito realizado no valor de: 1099.0
+12/12/2024 01:30:18: Depósito: R$ 1456.0. Saldo atual: R$ 1456.0
+12/12/2024 01:30:18: Depósito realizado no valor de: 1456.0
+12/12/2024 10:51:53: Depósito: R$ 1000.0. Saldo atual: R$ 1000.0
+12/12/2024 11:14:08: Depósito: R$ 100.0. Saldo atual: R$ 100.0
+12/12/2024 11:16:26: Depósito: R$ 100.0

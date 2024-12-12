@@ -1,0 +1,9 @@
+[Informações do Usuário]
+Nome: Carlos Henrique
+CPF: 12345678901
+Senha: 12345
+Telefone: (62) 91234-5678
+Endereço: Rua das Flores, 123 - Centro, Goianésia-GO
+Tipo de Usuário: 2
+
+[Histórico de Movimentação]
