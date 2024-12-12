@@ -1,8 +1,12 @@
 package sistemaBancario;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.nio.file.Paths;
+import java.nio.file.Path;
+import java.util.List;
 
 public class RegistroUtils {
     private static final String PASTA_USUARIOS = "usuarios/";
@@ -19,6 +23,16 @@ public class RegistroUtils {
         }
     }
 
+    public static void carregarSaldoConta(Conta conta, String cpf) throws IOException {
+        String arquivo = "usuarios/" + cpf + ".txt";
+        Path path = Paths.get(arquivo);
+        List<String> linhas = Files.readAllLines(path);
+        String novoSaldo = "Saldo da conta corrente: " + conta.getSaldo();
+        System.out.println(linhas);
+        linhas.remove(8);
+        linhas.add(8,novoSaldo);
+        Files.write(path, linhas);//
+    }
 
     public static void criarArquivoUsuario(Usuario usuario, ContaCorrentePrincipal contaCorrente, ContaPoupanca contaPoupanca) {
         String nomeArquivo = PASTA_USUARIOS + usuario.getCpf() + ".txt";

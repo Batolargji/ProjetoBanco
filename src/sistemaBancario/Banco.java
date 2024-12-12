@@ -233,25 +233,6 @@ class Banco {
     }
 
 
-
-    
-    private static void carregarSaldoConta(Conta conta) {
-        String arquivo = "usuarios/" + conta.getNumeroConta() + ".txt";
-        try (BufferedReader br = new BufferedReader(new FileReader(arquivo))) {
-            String linha;
-            while ((linha = br.readLine()) != null) {
-                if (linha.startsWith("Saldo da conta corrente: ") || linha.startsWith("Saldo da conta poupança: ")) {
-                    String[] partes = linha.split(": ");
-                    if (partes.length == 2) {
-                        double novoSaldo = Double.parseDouble(partes[1]);
-                        conta.saldo = novoSaldo;
-                    }
-                }
-            }
-        } catch (IOException | NumberFormatException e) {
-            System.out.println("Erro ao carregar saldo da conta: " + e.getMessage());
-        }
-    }
     
     public static void carregarSaldoConta(Conta conta, String cpf) {
         String arquivo = "usuarios/" + cpf + ".txt";

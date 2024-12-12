@@ -1,5 +1,6 @@
 package sistemaBancario;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 class Bancario extends Usuario {
@@ -33,7 +34,11 @@ class Bancario extends Usuario {
                     visualizarTodasAsContas();
                     break;
                 case 2:
-                    depositarNaConta();
+                    try {
+                        depositarNaConta();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                     break;
                 case 3:
                     transferirEntreContas();
@@ -55,7 +60,7 @@ class Bancario extends Usuario {
         Banco.listarTodasAsContas();
     }
 
-    private void depositarNaConta() {
+    private void depositarNaConta() throws IOException {
         System.out.print("Informe o ID da conta para depósito: ");
         String idConta = entrada.nextLine();
         Conta conta = Banco.buscarContaPorId(idConta);
@@ -67,6 +72,7 @@ class Bancario extends Usuario {
 
             conta.depositar(valor);
             System.out.println("Depósito realizado com sucesso.");
+            RegistroUtils.carregarSaldoConta(conta, "73552275134");
         } else {
             System.out.println("Conta não encontrada.");
         }
